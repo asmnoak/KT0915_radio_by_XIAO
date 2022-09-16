@@ -1,43 +1,43 @@
-<p><H3>KT0915 DSP���W�IIC�̕]��</H3></p>
+<p><H3>KT0915 DSPラジオICの評価</H3></p>
 <p>
-KT0915�́AKT�}�C�N������FM/AM�Ή���DSP���W�IIC�ł���BAM�͒��g�A�Z�g�i32MHz�܂Łj�ɑΉ����Ă���B<br>FM�̎��g���͈͂�32MHz����110MHz�ƍL���B<br>
-SSOP16�s���̏����ȃp�b�P�[�W�ł��邽�߁A�ϊ���Ƀn���_�t������K�v������B<br>
-I2C�C���^�[�t�F�[�X�ŃR���g���[���ł��AArduino�Ƃ̑g�ݍ��킹���\�ł���B<br>
-�����d����3.3V�Ή��Ȃ̂ŁA5V��Arduino�Ɛڑ����邽�߂ɂ͐M�����x���̓d���ϊ����K�v�ł���B<br>
-�����ł́A3.3V�œ��삷��Seeeduino XIAO�Ƒg�ݍ��킹�ĕ]������B<br>
-�]���Ɏg�p�������C�u�����́A<a href="https://github.com/pu2clr/KT0915">������ipu2clr at GitHub�j</a>�ɂ���B<br>
-�]�������\����examples�t�H���_��KT0915_02_OLED�iArduinoProMini�Ή��̉�H�}����j�ł���B<br>�R�[�h��KT0915_02_OLED�t�H���_�ɂ�����̂����ς����B<br>
-�T�v�A�f�[�^�V�[�g�́A<a href="https://www.aitendo.com/product/7449">������</a>���Q�l�ɂ���Ƃ悢�B<br>
+KT0915は、KTマイクロ製のFM/AM対応のDSPラジオICである。AMは中波、短波（32MHzまで）に対応している。<br>FMの周波数範囲は32MHzから110MHzと広い。<br>
+SSOP16ピンの小さなパッケージであるため、変換基板にハンダ付けする必要がある。<br>
+I2Cインターフェースでコントロールでき、Arduinoとの組み合わせが可能である。<br>
+ただ電圧が3.3V対応なので、5VのArduinoと接続するためには信号レベルの電圧変換が必要である。<br>
+ここでは、3.3Vで動作するSeeeduino XIAOと組み合わせて評価する。<br>
+評価に使用したライブラリは、<a href="https://github.com/pu2clr/KT0915">こちら（pu2clr at GitHub）</a>にある。<br>
+評価した構成はexamplesフォルダのKT0915_02_OLED（ArduinoProMini対応の回路図あり）である。<br>コードはKT0915_02_OLEDフォルダにあるものを改変した。<br>
+概要、データシートは、<a href="https://www.aitendo.com/product/7449">こちら</a>を参考にするとよい。<br>
 </p>
 
-<p><strong>�]���ł̑Ή�</strong><br>
-KT0915_02_OLED�̍\����ύX���āA���g����UP/DOWN���ł���悤�ɂ����B<br>
-��̓I�ɂ́A�R�[�h���D2�AD3�̃��[�^���[�G���R�[�_�i��H�}�ɂ͂Ȃ��j�̎g�p���~�߂āA�o���h�̐؂�ւ��Ɏg�p���邱�Ƃɂ����B<br>��H�}���SW5�ASW6�ɑΉ�����R�[�h�iTEST_BUTTON1,2�j��ύX���āA�^�N�g�X�C�b�`�Ŏ��g����UP/DOWN���ł���悤�ɂ����B<br>
+<p><strong>評価での対応</strong><br>
+KT0915_02_OLEDの構成を変更して、周波数のUP/DOWNができるようにした。<br>
+具体的には、コード上のD2、D3のロータリーエンコーダ（回路図にはない）の使用を止めて、バンドの切り替えに使用することにした。<br>回路図上のSW5、SW6に対応するコード（TEST_BUTTON1,2）を変更して、タクトスイッチで周波数のUP/DOWNができるようにした。<br>
 </p>
-<p><strong>H/W�\��</strong><br>
- �ESeeeduino XIAO - �R���g���[��<br>
- �ESD1306 128x64 OLED�\�����u<br>
- �E�^�N�g�X�C�b�`�P����U<br>
+<p><strong>H/W構成</strong><br>
+ ・Seeeduino XIAO - コントローラ<br>
+ ・SD1306 128x64 OLED表示装置<br>
+ ・タクトスイッチ１から６<br>
   <ul>
-   <li>�^�N�g�X�C�b�`�P�A�Q�FD2,D3 - �o���h�؂�ւ�</li>
-   <li>�^�N�g�X�C�b�`�R�A�S�FD6,D7 - �{�����[��</li>
-   <li>�^�N�g�X�C�b�`�T�A�U�FD8,D9 - ���g��UP/DOWN</li>
+   <li>タクトスイッチ１、２：D2,D3 - バンド切り替え</li>
+   <li>タクトスイッチ３、４：D6,D7 - ボリューム</li>
+   <li>タクトスイッチ５、６：D8,D9 - 周波数UP/DOWN</li>
    </ul>
- �EXtal���U��i32768Hz�j�A�R���f���T��<br>
- �EI2C�ڑ�&nbsp; KT0915�ƕ\�����u�i�}���`�h���b�v�Őڑ��j<br>
-   &nbsp;&nbsp;&nbsp; �����̃v���A�b�v�@�\�𗘗p���Ă���̂Ńv���A�b�v��R�͕s�v<br>
+ ・Xtal発振器（32768Hz）、コンデンサ類<br>
+ ・I2C接続&nbsp; KT0915と表示装置（マルチドロップで接続）<br>
+   &nbsp;&nbsp;&nbsp; 内蔵のプルアップ機能を利用しているのでプルアップ抵抗は不要<br>
 </p>
 <p>
-<img src="./KT0915_OLED_XIAO.jpg" width="360" height="430">
-FM 80.4MHz����M��
+<img src="https://github.com/asmnoak/KT0915_radio_by_XIAO/blob/main/KT0915_OLED_XIAO.JPG" width="360" height="430">
+FM 80.4MHzを受信中
 </p>
-<p><strong>����</strong><br>
- �E�o���h�i���g�A�Z�g�AFM�j�̕ύX�i�^�N�g�X�C�b�`�j�B<br>
- �E���ʒ����i�^�N�g�X�C�b�`�j�B<br>
- �E��M���g���̕ύX�i�^�N�g�X�C�b�`�j�B<br>
+<p><strong>操作</strong><br>
+ ・バンド（中波、短波、FM）の変更（タクトスイッチ）。<br>
+ ・音量調整（タクトスイッチ）。<br>
+ ・受信周波数の変更（タクトスイッチ）。<br>
 </p>
-<p><strong>�ڑ�</strong><br>
-�e�R���|�[�l���g�̐ڑ��͈ȉ��̒ʂ�B<br>
+<p><strong>接続</strong><br>
+各コンポーネントの接続は以下の通り。<br>
 <p>
 <table> 
 <tr>
@@ -53,10 +53,10 @@ FM 80.4MHz����M��
 </p>
 </p>
 <p>
-�^�N�g�X�C�b�`�i�{�^���j
+タクトスイッチ（ボタン）
 <table> 
 <tr>
-<td>�{�^��&nbsp;</td><td>XIAO&nbsp;</td>
+<td>ボタン&nbsp;</td><td>XIAO&nbsp;</td>
 </tr>
 <tr>
 <td>BAND</td><td>D2,D3</td>
@@ -69,26 +69,26 @@ FM 80.4MHz����M��
 <tr>
 </table>
 </p>
-<p><strong>�C���X�g�[��</strong><br>
+<p><strong>インストール</strong><br>
 <ol>
-<li>�R�[�h���AZIP�`���Ń_�E�����[�h</li>
-<li>ArduinoIDE�ɂ����āA���C�u�����}�l�[�W������ȉ����������ăC���X�g�[������</li>
+<li>コードを、ZIP形式でダウンロード</li>
+<li>ArduinoIDEにおいて、ライブラリマネージャから以下を検索してインストールする</li>
  <ul>
   <li>KT0915</li>
   <li>Adafruit_BusIO</li>
   <li>Adafruit_GFX</li>
   <li>Adafruit_SSD1306</li>
  </ul>
-<li>ArduinoIDE����KT0915_02_OLED.ino���J��</li>
-<li>�u���؁E�R���p�C���v�ɐ���������A��U�A�u���O��t���ĕۑ��v���s��</li>
+<li>ArduinoIDEからKT0915_02_OLED.inoを開く</li>
+<li>「検証・コンパイル」に成功したら、一旦、「名前を付けて保存」を行う</li>
 </ol>
 </p>
-<p><strong>�኱�̉��</strong><br>
-�E��M�o���h��akc_band band[]��ύX����i�s76�j�B<br>
-�E��M���g���̕ύX���ẮA�{�^��������������ƘA���ύX�ɂȂ�B<br>
-�EENABLE�i�s��9�j�͐��䂵�Ă��Ȃ��̂ŁAVCC�i3.3V�j�ɐڑ�����B<br>
-�EVOL�ACH�s���͎g�p���Ă��Ȃ��i�����Ă݂�������x�����܂����������j�B<br>
+<p><strong>若干の解説</strong><br>
+・受信バンドはakc_band band[]を変更する（行76）。<br>
+・受信周波数の変更ついては、ボタンを押し続けると連続変更になる。<br>
+・ENABLE（ピン9）は制御していないので、VCC（3.3V）に接続する。<br>
+・VOL、CHピンは使用していない（試してみたが安定度がいまいちだった）。<br>
 </p>
-<p><strong>���ӎ���</strong><br>
-�E���p�̍ۂ́A���ȐӔC�ł��y���݂��������B<br>
+<p><strong>注意事項</strong><br>
+・利用の際は、自己責任でお楽しみください。<br>
 </p>
